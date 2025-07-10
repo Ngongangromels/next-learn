@@ -6,7 +6,7 @@ import { useOptimistic, useRef, useState, useTransition } from "react";
 
 export const UpdateTitleForm = (props: {
   children: string;
-  setTile: (newTitle: string) => void;
+  setTile?: (newTitle: string) => void;
   className?: string;
 }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +27,7 @@ export const UpdateTitleForm = (props: {
           onClick={() => {
             setIsEditing(false);
             const newTitle = ref.current?.value ?? ""
-            props.setTile(newTitle);
+            props.setTile?.(newTitle);
             startTransition(() => {
                 setTile(newTitle);
             })
