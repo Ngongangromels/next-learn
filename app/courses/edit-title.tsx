@@ -11,8 +11,11 @@ export const UpdateTitleForm = (props: {
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
-  const [isPending, startTransition] = useTransition()
-  const [title, setTile] = useOptimistic(props.children, (_, newTitle: string) => newTitle)
+  const [isPending, startTransition] = useTransition();
+  const [title, setTile] = useOptimistic(
+    props.children,
+    (_, newTitle: string) => newTitle
+  );
   if (isEditing) {
     return (
       <div className="group flex items-center gap-2">
@@ -20,17 +23,16 @@ export const UpdateTitleForm = (props: {
           ref={ref}
           className={cn(props.className)}
           defaultValue={props.children}
-        >
-        </input>
+        ></input>
         <button
           className="group-hover:opacity-100 opacity-0 p-1 bg-accent"
           onClick={() => {
             setIsEditing(false);
-            const newTitle = ref.current?.value ?? ""
+            const newTitle = ref.current?.value ?? "";
             props.setTile?.(newTitle);
             startTransition(() => {
-                setTile(newTitle);
-            })
+              setTile(newTitle);
+            });
           }}
         >
           <Check size={16} />
@@ -41,9 +43,13 @@ export const UpdateTitleForm = (props: {
 
   return (
     <div className="group flex items-center gap-2">
-    <p className={cn(props.className, {
-        "animate-pulse": isPending
-    })}>{title}</p>
+      <p
+        className={cn(props.className, {
+          "animate-pulse": isPending,
+        })}
+      >
+        {title}
+      </p>
       <button
         className="group-hover:opacity-100 opacity-0 p-1 bg-accent"
         onClick={() => setIsEditing(true)}
